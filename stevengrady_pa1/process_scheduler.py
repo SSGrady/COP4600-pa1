@@ -3,8 +3,7 @@ import sys
 
 # Creates a dictionary to store the process data
 def process_data(name, arrival, burst):
-    return 
-    {
+    return {
         'name': name,
         'arrival': arrival,
         'burst' : burst,
@@ -72,6 +71,19 @@ def sjf_scheduler(processes, total_time):
     print(f"Finished at time {total_time:4}")
     return completed_processes
 
+def validate_input(params) -> None:
+    """Validates the required input parameters."""
+    if 'use' not in params:
+        print("Error: Missing parameter 'use'")
+        sys.exit(1)
+    if params['use'] == 'rr' and 'quantum' not in params:
+        print("Error: Missing quantum parameter when use is 'rr'")
+        sys.exit(1)
+    if 'processcount' not in params or 'runfor' not in params:
+        print("Error: Missing essential parameters (processcount, runfor)")
+        sys.exit(1)
+    return
+
 # Defining the main func framework
 def main(input_file):
     params = {}
@@ -96,6 +108,22 @@ def main(input_file):
                     processes.append(process_data(name, arrival, burst))
                 elif parts[0] == 'end':
                     break
+        # Debugging step: check the processes list
+        for process in processes:
+            if process is None:
+                print("Error: Encountered a None value in processes list.")
+            else:
+                print(f"Debug: Loaded process - {process}")
+                
+        validate_input(params)
+        
+        if params['use'] == 'sjf':
+            completed_processes = sjf_scheduler(processes, params['runfor'])
+        
+        # Output the results
+        for process in completed_processes:
+            print(f"{process['name']} wait {process['wait_time']} turnaround {process['turnaround_time']} response {process['response_time']}")
+        
     except FileNotFoundError:
         print(f"Error: File '{input_file}' not found")
         sys.exit(1)
