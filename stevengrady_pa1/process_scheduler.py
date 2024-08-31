@@ -16,7 +16,7 @@ def process_data(name, arrival, burst):
     }
 
 def sjf_scheduler(processes, total_time):
-    # Preemptive shortest job first (SJF) scheduler
+    """Preemptive Shortest Job First (SJF) scheduler."""
     time = 0
     completed_processes = []
     running_process = None
@@ -29,13 +29,13 @@ def sjf_scheduler(processes, total_time):
         new_arrivals = [p for p in processes if p['arrival'] == time]
 
         for process in new_arrivals:
-            # Ensure time is padded w spaces if it has fewer than four digits
             print(f"Time {time:4}: {process['name']} arrived")
+
         # Get processes that have arrived by the current time
         available_processes = [p for p in processes if p['arrival'] <= time and p['remaining_time'] > 0]
 
         if available_processes:
-            # Select the process w the shortest remaining burst time
+            # Select the process with the shortest remaining burst time
             shortest_job = min(available_processes, key=lambda p: p['remaining_time'])
 
             if running_process:
@@ -44,32 +44,33 @@ def sjf_scheduler(processes, total_time):
                     running_process = shortest_job
             else:
                 running_process = shortest_job
-            
+
             if running_process['start_time'] is None:
                 running_process['start_time'] = time
                 running_process['response_time'] = time - running_process['arrival']
-            
+
             print(f"Time {time:4}: {running_process['name']} selected (burst {running_process['remaining_time']:4})")
 
             # Execute the process for 1 time unit
             running_process['remaining_time'] -= 1
 
-        # If the process is completed, mark it as finished
-        if running_process['remaining_time'] == 0:
-            running_process['completion_time'] = time + 1
-            running_process['turnaround_time'] = running_process['completion_time'] - running_process['arrival']
-            running_process['wait_time'] = running_process['turnaround_time'] - running_process['burst']
-            print(f"Time {time + 1:4}: {running_process['name']} finished")
-            completed_processes.append(running_process)
-            running_process = None
-        
+            # If the process is completed, mark it as finished
+            if running_process['remaining_time'] == 0:
+                running_process['completion_time'] = time + 1
+                running_process['turnaround_time'] = running_process['completion_time'] - running_process['arrival']
+                running_process['wait_time'] = running_process['turnaround_time'] - running_process['burst']
+                print(f"Time {time + 1:4}: {running_process['name']} finished")
+                completed_processes.append(running_process)
+                running_process = None
         else:
             # No process available, CPU is idle
             print(f"Time {time:4}: Idle")
-        
+
         time += 1
+
     print(f"Finished at time {total_time:4}")
     return completed_processes
+
 
 def validate_input(params) -> None:
     """Validates the required input parameters."""
@@ -108,12 +109,6 @@ def main(input_file):
                     processes.append(process_data(name, arrival, burst))
                 elif parts[0] == 'end':
                     break
-        # Debugging step: check the processes list
-        for process in processes:
-            if process is None:
-                print("Error: Encountered a None value in processes list.")
-            else:
-                print(f"Debug: Loaded process - {process}")
                 
         validate_input(params)
         
