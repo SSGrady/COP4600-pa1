@@ -16,6 +16,15 @@ def process_data(name, arrival, burst):
         'response_time': None
     }
 
+def sjf_scheduler(processes, total_time):
+    # Preemptive shortest job first (SJF) scheduler
+    time = 0
+    completed_processes = []
+    running_process = None
+
+    print(f'{len(processes)} processes')
+    print('Using preemptive Shortest Job First')
+
 # Defining the main func framework
 def main(input_file):
     params = {}
