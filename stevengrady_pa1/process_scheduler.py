@@ -1,4 +1,6 @@
 # Implement Pre-emptive SJF Scheduler
+# Author: ChatGPT
+# Co-Programmer and lead debugger: Steven Grady - COP 4600 PA#1 Group 13
 import sys
 
 # Creates a dictionary to store the process data
