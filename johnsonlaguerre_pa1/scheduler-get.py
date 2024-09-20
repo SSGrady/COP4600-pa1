@@ -196,6 +196,8 @@ def print_to_output_file(process_count, scheduling_algo, run_for, quantum, proce
         if scheduling_algo == 'rr':
             f.write(f"Quantum {quantum}\n")
 
+        f.write('\n')
+        
         # Print the timeline (arrival, selected, finished, idle)
         for event in timeline:
             f.write(event + '\n')
