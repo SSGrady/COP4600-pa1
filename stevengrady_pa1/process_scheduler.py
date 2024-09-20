@@ -73,6 +73,56 @@ def sjf_scheduler(processes, total_time):
     print(f"Finished at time {total_time:4}")
     return completed_processes
 
+def round_robin_scheduler(processes, quantum, total_time):
+    """Round Robin Scheduler with fixed quantum time slice and formatted output."""
+    time = 0
+    queue = [p for p in sorted(processes, key=lambda x: x['arrival'])]
+    completed_processes = []
+    
+    print(f"{len(processes)} processes")
+    print("Using Round Robin")
+    print(f"Quantum {quantum}")
+    
+    while time < total_time:
+        # Check for newly arrived processes
+        new_arrivals = [p for p in queue if p['arrival'] == time]
+        for process in new_arrivals:
+            print(f"Time {time:4}: {process['name']} arrived")
+        
+        if queue:
+            current_process = queue.pop(0)
+            
+            if current_process['start_time'] is None:
+                current_process['start_time'] = time
+                current_process['response_time'] = time - current_process['arrival']
+            
+            print(f"Time {time:4}: {current_process['name']} selected (burst {current_process['remaining_time']:4})")
+            
+            if current_process['remaining_time'] <= quantum:
+                time += current_process['remaining_time']
+                current_process['remaining_time'] = 0
+                current_process['completion_time'] = time
+                current_process['turnaround_time'] = current_process['completion_time'] - current_process['arrival']
+                current_process['wait_time'] = current_process['turnaround_time'] - current_process['burst']
+                
+                print(f"Time {time:4}: {current_process['name']} finished")
+                completed_processes.append(current_process)
+            else:
+                time += quantum
+                current_process['remaining_time'] -= quantum
+                queue.append(current_process)
+        else:
+            # No process available, CPU is idle
+            print(f"Time {time:4}: Idle")
+            time += 1
+        
+        # Add newly arrived processes to the queue
+        queue += [p for p in processes if p['arrival'] == time]
+
+    print(f"Finished at time {total_time:4}")
+    return completed_processes
+
+
 
 def validate_input(params) -> None:
     """Validates the required input parameters."""
