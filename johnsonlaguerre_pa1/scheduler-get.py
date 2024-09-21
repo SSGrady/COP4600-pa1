@@ -212,9 +212,7 @@ def print_to_output_file(process_count, scheduling_algo, run_for, quantum, proce
         # Print when the simulation finishes
         f.write(f"Finished at time {run_for}\n")
 
-        # JL: Print newlines.
-        for process in processes:
-            f.write('\n')
+        # JL: Print newline.
         f.write('\n')
 
         # Print each process's wait, turnaround, and response times
@@ -226,8 +224,6 @@ def print_to_output_file(process_count, scheduling_algo, run_for, quantum, proce
                         f"response \t{process.response_time}\n")
             else:
                 f.write(f"{process.name} did not finish\n")
-        
-        f.write('\n')
 
 def main():
     # Check if the input file is provided
