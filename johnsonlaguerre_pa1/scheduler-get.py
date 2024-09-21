@@ -14,6 +14,7 @@ class Process:
         self.turnaround_time = 0
         self.response_time = -1  # Initialized as -1 to detect first response
         self.completed = False
+        self.appended = False # JL: I added this attribute.
 
     def __repr__(self):
         return (f"Process(name={self.name}, arrival_time={self.arrival_time}, "
@@ -85,10 +86,12 @@ def round_robin_scheduling(processes, run_for, quantum):
     while time < run_for:
         # Check if any processes are arriving at the current time
         for process in processes:
-            if process.arrival_time == time:
+            
+            # JL: I added the process.appended check.
+            if process.arrival_time == time and process.appended == False:
                 ready_queue.append(process)
                 timeline.append(f"Time {time}: {process.name} arrived")
-
+        
         # If there's a process in the ready queue, process it
         if ready_queue:
             current_process = ready_queue.popleft()
@@ -103,16 +106,18 @@ def round_robin_scheduling(processes, run_for, quantum):
             time_slice = min(quantum, current_process.remaining_time)
             current_process.remaining_time -= time_slice
             time += time_slice
-
+            
             # Check if any processes are arriving during this time slice
-            for t in range(time - time_slice, time):
+            # JL: I widened the range by 1 to the right.
+            for t in range(time - time_slice, time+1):
                 for process in processes:
-
-                    # JL: I added the "process.response_time == -1" check.
+                    
+                    # JL: I added the "process.response_time == -1" check and "process.appended" modification.
                     if process.arrival_time == t and process.response_time == -1 and process.completed == False and process not in ready_queue and process.remaining_time > 0:
+                        process.appended = True
                         ready_queue.append(process)
                         timeline.append(f"Time {t}: {process.name} arrived")
-
+                        
             # If the process finishes
             if current_process.remaining_time == 0:
                 current_process.completed = True
@@ -121,6 +126,7 @@ def round_robin_scheduling(processes, run_for, quantum):
                 timeline.append(f"Time {time}: {current_process.name} finished")
             else:
                 ready_queue.append(current_process)  # Put back into the queue if not finished
+            
         else:
             # If no process is in the queue, the CPU is idle
             timeline.append(f"Time {time}: Idle")
@@ -192,7 +198,8 @@ def print_to_output_file(process_count, scheduling_algo, run_for, quantum, proce
     with open(output_file, 'w') as f:
         # Print the summary header
         f.write(f"{process_count} processes\n")
-        f.write(f"Using {scheduling_algo_name}\n") # JL: modified print stmt. to match above conditional check.
+        f.write(f"Using {scheduling_algo_name}\n") # JL: modified print statement to match the above conditional check.
+        
         if scheduling_algo == 'rr':
             f.write(f"Quantum {quantum}\n")
 
