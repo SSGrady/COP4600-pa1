@@ -1,0 +1,22 @@
+1. The code that chatgpt gave to me took some tweaking to get right, but after getting it to fix its own errors
+the code runs correctly and passes all test cases.
+2. The code is efficient, but there could definitely be some optimizations to it's space and time to better
+it's performance.
+3. Yes, the code is well-organized, it inclues good variable names, no duplication, and has a very consistent style
+throughout the code.
+4. Yes, the code was able to pass all test cases as well as handle all errors exactly like the problem prompted.
+If you don't feed the code an input file or give it an invalid input file, it will print: "Usage: scheduler-gpt.py <input file>"
+and exit the program. Since I had FIFO, race conditions aren't really involved in the code, since there is no preemption 
+and the processes execute in the order they arrive.
+5. I don't believe the code chatGPT gave was very innovative, I think it gave me a pretty basic way of solving
+the problem at hand, but I do think trying to do this in a more innovative way would be overcomplicated and costly
+towards the efficiency.
+6. Overall I would rate the code a 9.5/10. I think there could be some very minimal changes to make the code
+a little more space efficient and time efficient, but I do think it is quite efficient already. My experience 
+working with AI was a 8.5/10. At the start of the conversation it gave me some incorrect outputs and the code
+didn't produce an output file, even though I provided it with the full problem and all the tasks. Although there
+was some mess ups, I found this to be easier than expected. I learned that you can keep tweaking the questions you
+give to AI to get a more and more specific and accurate response. If I had to do something differently I would
+start the conversation not only with the problem at hand, but also give it sample inputs and outputs, that way
+I would have to jump through less loop holes to get the code to provide the correct output.
+https://chatgpt.com/share/66f702d0-4478-800f-a40c-c99b2ee79077
