@@ -1,0 +1,14 @@
+1. Both my Round Robin and First Come, First Served implementations needed correcting. For my Round Robin specifically, I had to fix the order in which process states were evaluated (e.g., arrived, selected, finished).
+
+2. The code was efficient and did not have any unnecessary elements.
+
+3. The code does appear to follow best practices. Variable names were meaningful and very close, if not exactly the same as, what I specified in my prompt.
+
+4. The code can handle errors where a file is not passed and when the input file has the value missing for a variable (e.g., the 5 is missing in "processcount 5").
+
+5. The code does not offer any specific innovations, it simply stuck to the instructions given and provided the necessary implementations.
+
+6. I would rate the overall quality of the code 7/10. It was well-written and stuck to what I asked for in my prompts, but I did have to modify the code to its results match the output files. My experience writing the code with AI would be an 8/10. It saved me a lot of time that I would have spent planning out what I was going to write, testing it, iterating, and fixing bugs. It was a little bit harder than I expected since I had to prompt multiple times to get the pieces I needed to work. I learned the importance of writing descriptive prompts, as that was very helpful in having a good base output to work with. If I had to do something differently, I probably would have spent more time focusing on fixing one issue at a time instead of prompting for different parts of the code in a somewhat disorganized way.
+
+Link to my ChatGPT conversation: https://chatgpt.com/share/bf0d9bdb-6879-42ff-aab3-95b8d345057c
+
