@@ -1,4 +1,9 @@
-# Any lines manually added or modified by me will be started with "JL: ".
+#Group 13 Members:
+#Joshua Byrd
+#Ethan Snead
+#Johnson Laguerre
+#Emily Gensch
+
 
 import os
 import sys
